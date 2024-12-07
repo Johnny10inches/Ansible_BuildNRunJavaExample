@@ -19,8 +19,14 @@
     src: internal/docker/build.Dockerfile
     dest: /opt/build/build.Dockerfile
 
-- name: Build Docker image
+- name: Check if joinfaces WAR file exists
+  stat:
+    path: /opt/build/output/joinfaces-example-5.4.x.war
+  register: war_file
+
+- name: Build Docker image if WAR file does not exist
   command: docker build -t joinfaces-build -f /opt/build/build.Dockerfile /opt/build/src
+  when: not war_file.stat.exists
 
 - name: Create output directory for artifacts
   file:
@@ -31,3 +37,4 @@
 - name: Run build container to extract artifacts
   command: >
     docker run --rm -v /opt/build/output:/artifacts joinfaces-build
+  when: not war_file.stat.exists
