@@ -1,0 +1,10 @@
+- name: Build production Docker image
+  command: docker build -t Jenkins -f /opt/app/prod.Dockerfile /opt/app
+
+- name: Run application in Docker container
+  docker_container:
+    name: Jenkins
+    image: Jenkins
+    state: started
+    ports:
+      - "8080:8080"

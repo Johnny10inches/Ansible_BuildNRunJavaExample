@@ -1,0 +1,16 @@
+- name: Create working directory for deployment
+  file:
+    path: /opt/app
+    state: directory
+    mode: '0755'
+
+- name: Copy prod.Dockerfile for production
+  copy:
+    src: docker/prod.Dockerfile
+    dest: /opt/app/prod.Dockerfile
+
+- name: Copy build artifacts from build node
+  synchronize:
+    src: build-node:/opt/build/output/
+    dest: /opt/app/
+    mode: pull
