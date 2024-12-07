@@ -20,7 +20,8 @@ RUN wget https://downloads.apache.org/maven/maven-4/4.0.0-rc-1/binaries/apache-m
     rm apache-maven-4.0.0-rc-1-bin.tar.gz && \
     ln -s /opt/maven/bin/mvn /usr/bin/mvn
 
-# Set up working directory
+# Add sources and set up working directory
+COPY . /opt/build
 WORKDIR /opt/build/src
 
 # Build and move the war file
