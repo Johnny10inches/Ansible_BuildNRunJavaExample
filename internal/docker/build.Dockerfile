@@ -1,33 +1,18 @@
-FROM ubuntu:20.04
+# Use the official Maven image with JDK 17
+FROM maven:3.9.4-eclipse-temurin-17
 
-ARG JENKINS_TAG=master
+# Set the working directory inside the container
+WORKDIR /app
 
-ENV DEBIAN_FRONTEND=noninteractive
+# Copy the project into the container
+COPY . .
 
-# Install dependencies and clean up after installation
-RUN apt-get update && apt-get install -y \
-    apt-utils \
-    openjdk-17-jdk \
-    git \
-    wget \
-    tar \
-    && rm -rf /var/lib/apt/lists/* \
-    && apt-get clean
-
-# Install Maven 4.0.0-rc-1
-RUN wget https://downloads.apache.org/maven/maven-4/4.0.0-rc-1/binaries/apache-maven-4.0.0-rc-1-bin.tar.gz && \
-    tar -xzf apache-maven-4.0.0-rc-1-bin.tar.gz && \
-    mv apache-maven-4.0.0-rc-1 /opt/maven && \
-    rm apache-maven-4.0.0-rc-1-bin.tar.gz && \
-    ln -s /opt/maven/bin/mvn /usr/bin/mvn
-
-# Add sources and set up working directory
-COPY . /opt/build
-WORKDIR /opt/build/src
-
-# Build and move the war file
+# Build the project and move the WAR file to /war-files
 RUN mkdir -p /war-files && \
-    mvn clean package -DskipTests -T 2C && \
-    if [ -f target/jenkins.war ]; then \
-      mv target/jenkins.war /war-files/jenkins.war; \
+    mvn clean package -DskipTests && \
+    if [ -f target/joinfaces-example.war ]; then \
+      mv target/joinfaces-example.war /war-files/joinfaces-example.war; \
     fi
+
+# Define the default command to copy artifacts from the container
+CMD ["sh", "-c", "cp -r /war-files /artifacts"]

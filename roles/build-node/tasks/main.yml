@@ -1,4 +1,4 @@
-- name: Create working directory
+- name: Create build directory
   file:
     path: /opt/build
     state: directory
@@ -9,19 +9,18 @@
     name: git
     state: present
 
-- name: Copy build.Dockerfile for build
+- name: Clone JoinFaces repository
+  git:
+    repo: https://github.com/joinfaces/joinfaces-maven-war-example.git
+    dest: /opt/build/src
+
+- name: Copy Dockerfile for build
   copy:
     src: internal/docker/build.Dockerfile
     dest: /opt/build/build.Dockerfile
 
-- name: Clone Jenkins repository
-  git:
-    repo: https://github.com/jenkinsci/jenkins.git
-    dest: /opt/build/src
-    version: master
-
 - name: Build Docker image
-  command: docker build -t jenkins-build -f /opt/build/build.Dockerfile /opt/build
+  command: docker build -t joinfaces-build -f /opt/build/build.Dockerfile /opt/build/src
 
 - name: Create output directory for artifacts
   file:
@@ -29,8 +28,6 @@
     state: directory
     mode: '0755'
 
-- name: Run build container to compile the project
+- name: Run build container to extract artifacts
   command: >
-    docker run --rm
-    -v /opt/build/output:/war-files
-    jenkins-build
+    docker run --rm -v /opt/build/output:/artifacts joinfaces-build

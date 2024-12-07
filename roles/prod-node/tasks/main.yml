@@ -1,16 +1,16 @@
 - name: Create working directory for deployment
   file:
-    path: /opt/app
+    path: /opt/joinfaces-example
     state: directory
     mode: '0755'
 
 - name: Copy prod.Dockerfile for production
   copy:
-    src: docker/prod.Dockerfile
-    dest: /opt/app/prod.Dockerfile
+    src: internal/docker/prod.Dockerfile
+    dest: /opt/joinfaces-example/prod.Dockerfile
 
 - name: Copy build artifacts from build node
   synchronize:
     src: build-node:/opt/build/output/
-    dest: /opt/app/
+    dest: /opt/joinfaces-example/
     mode: pull
