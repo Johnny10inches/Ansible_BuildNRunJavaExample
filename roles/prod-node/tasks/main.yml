@@ -11,6 +11,6 @@
 
 - name: Copy build artifacts from build node
   synchronize:
-    src: build-node:/opt/build/output/
-    dest: /opt/joinfaces-example/
+    src: build-node:/opt/build/output/joinfaces-example-5.4.x.war
+    dest: /opt/joinfaces-example/joinfaces-example-5.4.x.war
     mode: pull
