@@ -10,13 +10,8 @@
     dest: /opt/joinfaces-example/prod.Dockerfile
 
 - name: Copy build artifacts from build node to prod node
-  hosts: prod-node
-  tasks:
-    - name: Copy build artifacts from build node
-      synchronize:
-        src: /opt/build/output/joinfaces-example-5.4.x.war
-        dest: /opt/joinfaces-example/joinfaces-example-5.4.x.war
-        mode: pull
-      delegate_to: build-node
-
-
+  synchronize:
+    src: /opt/build/output/joinfaces-example-5.4.x.war
+    dest: /opt/joinfaces-example/joinfaces-example-5.4.x.war
+    mode: pull
+  delegate_to: build-node
