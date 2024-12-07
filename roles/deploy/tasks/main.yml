@@ -1,5 +1,5 @@
 - name: Build production Docker image
-  command: docker build -t joinfaces-example-5.4.x.war -f /opt/joinfaces-example/prod.Dockerfile /opt/app
+  command: docker build -t joinfaces-example-5.4.x.war -f /opt/joinfaces-example/prod.Dockerfile /opt/joinfaces-example/
 
 - name: Run application in Docker container
   docker_container:
