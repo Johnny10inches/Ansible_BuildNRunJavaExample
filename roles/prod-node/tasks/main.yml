@@ -9,10 +9,8 @@
     src: internal/docker/prod.Dockerfile
     dest: /opt/joinfaces-example/prod.Dockerfile
 
-- name: Copy build artifacts from build node
-  synchronize:
-    src: /opt/build/output/joinfaces-example-5.4.x.war
-    dest: /opt/joinfaces-example/joinfaces-example-5.4.x.war
-    mode: pull
-    delegate_to: build-node
+- name: Copy build artifacts from build node to prod node
+  command: >
+    rsync -avz --rsh="ssh -o StrictHostKeyChecking=no" build-node:/opt/build/output/joinfaces-example-5.4.x.war /opt/joinfaces-example/joinfaces-example-5.4.x.war
+  delegate_to: prod-node
 
