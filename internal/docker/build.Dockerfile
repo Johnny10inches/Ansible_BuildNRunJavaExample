@@ -7,7 +7,6 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Install dependencies and clean up after installation
 RUN apt-get update && apt-get install -y \
     apt-utils \
-    git \
     openjdk-17-jdk \
     wget \
     tar \

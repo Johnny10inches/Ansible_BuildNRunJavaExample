@@ -4,9 +4,3 @@
       - docker.io
     state: present
     update_cache: true
-
-- name: Add user to Docker group
-  user:
-    name: "{{ ansible_user }}"
-    groups: docker
-    append: true

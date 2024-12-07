@@ -4,6 +4,11 @@
     state: directory
     mode: '0755'
 
+- name: Ensure git is installed
+  apt:
+    name: git
+    state: present
+
 - name: Copy build.Dockerfile for build
   copy:
     src: internal/docker/build.Dockerfile
