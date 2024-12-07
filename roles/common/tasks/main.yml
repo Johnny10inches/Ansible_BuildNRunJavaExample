@@ -4,3 +4,14 @@
       - docker.io
     state: present
     update_cache: true
+
+- name: Install python-pip
+  apt:
+    name: python-pip
+    state: present
+
+- name: Install docker python module
+  pip:
+    name: docker
+    state: present
+    executable: pip

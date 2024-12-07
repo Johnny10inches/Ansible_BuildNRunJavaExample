@@ -13,5 +13,6 @@
   synchronize:
     src: /opt/build/output/joinfaces-example-5.4.x.war
     dest: /opt/joinfaces-example/joinfaces-example-5.4.x.war
-    mode: pull
-  delegate_to: build-node
+    mode: push
+  delegate_to: "{{ groups['build-node'][0] }}"
+  when: inventory_hostname in groups['prod-node']

@@ -3,8 +3,8 @@
 
 - name: Run application in Docker container
   docker_container:
-    name: joinfaces-example
-    image: joinfaces-example
+    name: joinfaces-example-5.4.x.war
+    image: joinfaces-example-5.4.x.war
     state: started
     ports:
       - "8080:8080"
