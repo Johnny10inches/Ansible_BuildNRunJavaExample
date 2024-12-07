@@ -8,6 +8,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y \
     apt-utils \
     openjdk-17-jdk \
+    git \
     wget \
     tar \
     && rm -rf /var/lib/apt/lists/* \
