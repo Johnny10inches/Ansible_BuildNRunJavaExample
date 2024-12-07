@@ -1,0 +1,23 @@
+- name: Setup and Deploy Application
+  hosts: all
+  become: true
+  roles:
+    - common
+
+- name: Configure Build Node
+  hosts: build-node
+  become: true
+  roles:
+    - build-node
+
+- name: Configure Production Node
+  hosts: prod-node
+  become: true
+  roles:
+    - prod-node
+
+- name: Deploy and Run Application
+  hosts: prod-node
+  become: true
+  roles:
+    - deploy
