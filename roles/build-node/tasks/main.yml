@@ -35,6 +35,12 @@
     mode: '0755'
 
 - name: Run build container to extract artifacts
-  command: >
-    docker run --rm -v /opt/build/output:/artifacts joinfaces-build
+  docker_container:
+    name: joinfaces-build
+    image: joinfaces-build
+    state: started
+    volumes:
+      - /opt/build/output:/artifacts
+    remove: yes
   when: not war_file.stat.exists
+
