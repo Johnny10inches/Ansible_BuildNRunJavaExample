@@ -1,0 +1,11 @@
+- name: Create build directory
+  file:
+    path: /opt/build
+    state: directory
+    mode: '0755'
+
+- name: Create output directory for artifacts
+  file:
+    path: /opt/build/output
+    state: directory
+    mode: '0755'

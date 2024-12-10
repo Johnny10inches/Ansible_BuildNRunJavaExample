@@ -1,46 +1,32 @@
-- name: Create build directory
-  file:
-    path: /opt/build
-    state: directory
-    mode: '0755'
+- name: Include tasks for creating directories
+  import_tasks: directories.yml
 
-- name: Ensure git is installed
-  apt:
-    name: git
-    state: present
-
-- name: Clone JoinFaces repository
+- name: Clone Jenkins repository
   git:
-    repo: https://github.com/joinfaces/joinfaces-maven-war-example.git
+    repo: https://github.com/jenkinsci/jenkins.git
     dest: /opt/build/src
+    version: "{{ git_repo_version }}"
 
 - name: Copy Dockerfile for build
   copy:
-    src: internal/docker/build.Dockerfile
+    src: build.Dockerfile
     dest: /opt/build/build.Dockerfile
 
-- name: Check if joinfaces WAR file exists
+- name: Check if Jenkins WAR file exists
   stat:
-    path: /opt/build/output/joinfaces-example-5.4.x.war
+    path: /opt/build/output/jenkins.war
   register: war_file
 
 - name: Build Docker image if WAR file does not exist
-  command: docker build -t joinfaces-build -f /opt/build/build.Dockerfile /opt/build/src
+  command: docker build -t jenkins-build -f /opt/build/build.Dockerfile /opt/build/src
   when: not war_file.stat.exists
-
-- name: Create output directory for artifacts
-  file:
-    path: /opt/build/output
-    state: directory
-    mode: '0755'
 
 - name: Run build container to extract artifacts
   docker_container:
-    name: joinfaces-build
-    image: joinfaces-build
+    name: jenkins.war-build
+    image: jenkins.war-build
     state: started
     volumes:
       - /opt/build/output:/artifacts
     remove: yes
   when: not war_file.stat.exists
-

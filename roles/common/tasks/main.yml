@@ -2,6 +2,7 @@
   apt:
     name:
       - docker.io
+      - git
     state: present
     update_cache: true
 

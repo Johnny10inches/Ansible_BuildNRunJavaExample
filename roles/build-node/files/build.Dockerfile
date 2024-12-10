@@ -9,8 +9,7 @@ COPY . .
 
 # Build the project and move the WAR file to /war-files
 RUN mkdir -p /war-files && \
-    mvn clean package -DskipTests -T 2C && \
-    mv target/joinfaces-example-5.4.x.war /war-files/joinfaces-example-5.4.x.war
+    mvn clean package -DskipTests -T 2C
 
 # Define the default command to copy artifacts from the container
-CMD ["sh", "-c", "cp -r /war-files/joinfaces-example-5.4.x.war /artifacts"]
+CMD ["sh", "-c", "cp -r app/target/jenkins.war /artifacts"]

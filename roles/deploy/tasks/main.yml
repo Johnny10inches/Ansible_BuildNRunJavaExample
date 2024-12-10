@@ -1,10 +1,10 @@
 - name: Build production Docker image
-  command: docker build -t joinfaces-example-5.4.x.war -f /opt/joinfaces-example/prod.Dockerfile /opt/joinfaces-example/
+  command: docker build -t jenkins -f /opt/jenkins/prod.Dockerfile /opt/jenkins/
 
 - name: Run application in Docker container
   docker_container:
-    name: joinfaces-example-5.4.x.war
-    image: joinfaces-example-5.4.x.war
+    name: jenkins
+    image: jenkins
     state: started
     ports:
       - "8080:8080"

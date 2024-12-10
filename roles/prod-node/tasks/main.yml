@@ -1,18 +1,15 @@
-- name: Create working directory for deployment
-  file:
-    path: /opt/joinfaces-example
-    state: directory
-    mode: '0755'
+- name: Include tasks for creating directories
+  import_tasks: directories.yml
 
 - name: Copy prod.Dockerfile for production
   copy:
-    src: internal/docker/prod.Dockerfile
-    dest: /opt/joinfaces-example/prod.Dockerfile
+    src: prod.Dockerfile
+    dest: /opt/jenkins/prod.Dockerfile
 
 - name: Copy build artifacts from build node to prod node
   synchronize:
-    src: /opt/build/output/joinfaces-example-5.4.x.war
-    dest: /opt/joinfaces-example/joinfaces-example-5.4.x.war
+    src: /opt/build/output/jenkins.war
+    dest: /opt/jenkins/jenkins.war
     mode: push
   delegate_to: "{{ groups['build-node'][0] }}"
   when: inventory_hostname in groups['prod-node']
