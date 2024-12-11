@@ -2,9 +2,4 @@
   command: docker build -t jenkins -f /opt/jenkins/prod.Dockerfile /opt/jenkins/
 
 - name: Run application in Docker container
-  docker_container:
-    name: jenkins
-    image: jenkins
-    state: started
-    ports:
-      - "8080:8080"
+  command: docker run -d --name jenkins -v /var/jenkins_home:/var/jenkins_home -p 8080:8080 jenkins
