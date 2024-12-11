@@ -3,13 +3,10 @@
     name:
       - docker.io
       - git
+      - python-pip
     state: present
     update_cache: true
 
-- name: Install python-pip
-  apt:
-    name: python-pip
-    state: present
 
 - name: Install docker python module
   pip:

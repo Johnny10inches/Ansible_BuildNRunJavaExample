@@ -12,4 +12,4 @@ RUN mkdir -p /war-files && \
     mvn clean package -DskipTests -T 2C
 
 # Define the default command to copy artifacts from the container
-CMD ["sh", "-c", "cp -r app/target/jenkins.war /artifacts"]
+CMD ["sh", "-c", "cp -r /app/war/target/jenkins.war /artifacts"]

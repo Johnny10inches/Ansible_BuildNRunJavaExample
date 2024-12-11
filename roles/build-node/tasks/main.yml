@@ -28,5 +28,4 @@
     state: started
     volumes:
       - /opt/build/output:/artifacts
-    remove: yes
   when: not war_file.stat.exists
